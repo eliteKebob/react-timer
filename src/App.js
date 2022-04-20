@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header"
+import { useState } from "react"
+import Stopwatch from "./components/Stopwatch"
+import Countdown from "./components/Countdown"
+
+import Switch from "./components/Switch"
 
 function App() {
+  const [mode, setMode] = useState(false)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main">
+      <Header />
+      <Switch setMode={setMode} mode={mode} />
+      {!mode ? <Stopwatch /> : <Countdown />}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
