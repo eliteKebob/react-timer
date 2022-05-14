@@ -1,8 +1,34 @@
 import { useStopwatch } from "react-timer-hook"
+import { useEffect } from "react"
 
 const Stopwatch = () => {
   const { seconds, minutes, hours, isRunning, start, pause, reset } =
     useStopwatch({ autoStart: false })
+
+  useEffect(() => {
+    if (hours < 1) {
+      if (seconds < 10) {
+        document.title = `${minutes}:0${seconds}`
+      }
+      if (seconds > 9) {
+        document.title = `${minutes}:${seconds}`
+      }
+    }
+    if (hours > 0) {
+      if (seconds < 10) {
+        document.title = `${hours}:${minutes}:0${seconds}`
+      }
+      if (seconds > 9) {
+        document.title = `${hours}:${minutes}:${seconds}`
+      }
+    }
+  }, [seconds])
+
+  const handleReset = () => {
+    reset()
+    pause()
+  }
+
   return (
     <div className="timer">
       <div className="sw-time">
@@ -36,7 +62,7 @@ const Stopwatch = () => {
         >
           Durdur
         </button>
-        <button onClick={reset}>Sıfırla</button>
+        <button onClick={() => handleReset()}>Sıfırla</button>
       </div>
       <p>{isRunning ? " " : "Durduruldu"}</p>
     </div>
